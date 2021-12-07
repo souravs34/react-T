@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Card from "../../shared/components/UI/Card";
 import "./PlaceItem.css";
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UI/Modal";
+import { AuthContext } from "../../shared/context/auth-context";
 const PlaceItem = (props) => {
+  const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const openMapHandler = () => setShowMap(true);
   const closeMapHandler = () => setShowMap(false);
+  const showDeleteWarningHandler = () => {
+    setShowConfirmModal(true);
+  };
+  const cancelDeleteHandler = () => {
+    setShowConfirmModal(false);
+  };
+  const confirmDeleteHandler = () => {
+    setShowConfirmModal(false);
+    console.log("Deleting");
+  };
   return (
     <>
       <Modal
@@ -19,6 +32,25 @@ const PlaceItem = (props) => {
       >
         <div className="map-container">
           <h2>The Map</h2>
+        </div>
+      </Modal>
+      <Modal
+        show={showConfirmModal}
+        onCancel={cancelDeleteHandler}
+        header="Are You Sure"
+        footerClass="place-item__modal-actions"
+      >
+        <p>
+          Do you want to proceed and delete this place? Please note that can't
+          be undone thereafter.
+        </p>
+        <div>
+          <Button inverse onClick={cancelDeleteHandler}>
+            CANCEL
+          </Button>
+          <Button danger onClick={confirmDeleteHandler}>
+            DELETE
+          </Button>
         </div>
       </Modal>
 
@@ -36,10 +68,16 @@ const PlaceItem = (props) => {
             <Button inverse onClick={openMapHandler}>
               View On Map
             </Button>
-            <Button to={`/places/${props.id}`} inverse>
-              Edit
-            </Button>
-            <Button danger>Delete</Button>
+            {auth.isLoggedIn && (
+              <Button to={`/places/${props.id}`} inverse>
+                Edit
+              </Button>
+            )}
+            {auth.isLoggedIn && (
+              <Button danger onClick={showDeleteWarningHandler}>
+                Delete
+              </Button>
+            )}
           </div>
         </Card>
       </li>
