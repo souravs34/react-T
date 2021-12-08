@@ -6,7 +6,17 @@ const HttpError = require("./models/http-error");
 const app = express();
 
 app.use(bodyParser.json()); // Converts json to javascript objects and calls next
+// Cors
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
 
+  next();
+});
 const placesRoutes = require("./routes/places-routes");
 const userRoutes = require("./routes/users-routes");
 app.use("/api/places", placesRoutes); // => /api/places/...
