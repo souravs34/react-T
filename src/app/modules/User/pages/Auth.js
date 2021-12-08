@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import axiosUsers from "../../../core/Axios/axios-user";
 import Card from "../../shared/components/UI/Card";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
@@ -13,12 +12,11 @@ import { AuthContext } from "../../shared/context/auth-context";
 import "./Auth.css";
 import ErrorModal from "../../shared/components/UI/ErrorModal";
 import LoadingSpinner from "../../shared/components/UI/LoadingSpinner";
-
+import { useHttpClient } from "../../../modules/shared/hooks/http-hook";
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -57,62 +55,35 @@ const Auth = () => {
     }
     setIsLoginMode((prevMode) => !prevMode);
   };
-  // Without Custom hook
+  // With Custom hook
+
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
     if (isLoginMode) {
-      const postData = JSON.stringify({
-        email: formState.inputs.email.value,
-        password: formState.inputs.password.value,
-      });
       try {
-        const response = await axiosUsers.post("login", postData);
-        console.log(response);
-        setIsLoading(false);
+        const postData = JSON.stringify({
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value,
+        });
+        await sendRequest("login", "POST", postData);
         auth.login();
-      } catch (err) {
-        console.log(err.response.data.message);
-        setIsLoading(false);
-        setError(
-          err.response.data.message || "Something went wrong, Please try again"
-        );
-      }
+      } catch (err) {}
     } else {
-      const postData = JSON.stringify({
-        name: formState.inputs.name.value,
-        email: formState.inputs.email.value,
-        password: formState.inputs.password.value,
-      });
       try {
-        const response = await axiosUsers.post("signup", postData);
-        console.log(response);
-        // const responseData = response.json();
-        // if (!response.status !== 201) {
-        //   throw new Error(response.message);
-        // }
-        // console.log(responseData);
-        setIsLoading(false);
+        const postData = JSON.stringify({
+          name: formState.inputs.name.value,
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value,
+        });
+        await sendRequest("signup", "POST", postData);
         auth.login();
-      } catch (err) {
-        console.log(err.response.data.message);
-        setIsLoading(false);
-        setError(
-          err.response.data.message || "Something went wrong, Please try again"
-        );
-      }
+      } catch (err) {}
     }
-
-    // console.log(formState.inputs);
-    // auth.login();
-  };
-  const clearErrorHandler = () => {
-    setError(null);
   };
 
   return (
     <>
-      <ErrorModal error={error} onClear={clearErrorHandler} />
+      <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
         <h2>Login Required</h2>
