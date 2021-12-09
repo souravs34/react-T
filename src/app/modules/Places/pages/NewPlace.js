@@ -7,7 +7,9 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/Util/Validators";
 import { useForm } from "../../shared/hooks/form-hook";
+// import { useHttpClient } from "../../shared/hooks/http-hook";
 const NewPlace = () => {
+  // const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -28,7 +30,7 @@ const NewPlace = () => {
 
   const placeSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(formState.inputs);
+    // sendRequest();
   };
 
   return (

@@ -4,6 +4,7 @@ import "./PlaceItem.css";
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UI/Modal";
 import { AuthContext } from "../../shared/context/auth-context";
+import Map from "../../shared/components/UI/Map";
 const PlaceItem = (props) => {
   const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
@@ -31,7 +32,7 @@ const PlaceItem = (props) => {
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
         <div className="map-container">
-          <h2>The Map</h2>
+          <Map center={props.coordinates} zoom={16} />
         </div>
       </Modal>
       <Modal
