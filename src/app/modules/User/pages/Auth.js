@@ -65,8 +65,9 @@ const Auth = () => {
           email: formState.inputs.email.value,
           password: formState.inputs.password.value,
         });
-        await sendRequest("login", "POST", postData);
-        auth.login();
+        const responseData = await sendRequest("users/login", "POST", postData);
+
+        auth.login(responseData.data.user.id);
       } catch (err) {}
     } else {
       try {
@@ -75,8 +76,13 @@ const Auth = () => {
           email: formState.inputs.email.value,
           password: formState.inputs.password.value,
         });
-        await sendRequest("signup", "POST", postData);
-        auth.login();
+        const responseData = await sendRequest(
+          "users/signup",
+          "POST",
+          postData
+        );
+
+        auth.login(responseData.data.user.id);
       } catch (err) {}
     }
   };

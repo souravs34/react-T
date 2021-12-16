@@ -9,7 +9,7 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await sendRequest("");
+        const response = await sendRequest("users");
         setLoadedUsers(response.data.users);
       } catch (err) {}
     };
