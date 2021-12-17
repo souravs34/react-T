@@ -4,7 +4,10 @@ const mongoose = require("mongoose");
 const Place = require("../models/place");
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
-
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapboxToken =
+  "pk.eyJ1Ijoic291cmF2YiIsImEiOiJja3d5b2t2ZzgwcGgyMm5tbjAxc3pkeHByIn0.SgF9RjWoozF0NA3RVFibsQ";
+const geocoder = mbxGeocoding({ accessToken: mapboxToken });
 const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid; //{pid:'p1}
   let place;
@@ -67,11 +70,20 @@ const createPlace = async (req, res, next) => {
   }
 
   const { title, description, address, creator } = req.body;
+  const geoData = await geocoder
+    .forwardGeocode({
+      query: address,
+      limit: 1,
+    })
+    .send();
+  console.log(geoData.body.features[0].geometry.coordinates);
+  const geoDataArray = geoData.body.features[0].geometry.coordinates;
+  const coordinates = { lat: geoDataArray[0], lng: geoDataArray[1] };
 
-  const coordinates = {
-    lat: 117.6902408,
-    lng: 174.0115749,
-  };
+  // const coordinates = {
+  //   lat: 117.6902408,
+  //   lng: 174.0115749,
+  // };
 
   const createdPlace = new Place({
     title,
