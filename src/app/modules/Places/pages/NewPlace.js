@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import "./PlaceForm.css";
 import Button from "../../shared/components/FormElements/Button";
 import Input from "../../shared/components/FormElements/Input";
@@ -31,7 +32,7 @@ const NewPlace = () => {
     },
     false
   );
-
+  const history = useHistory();
   const placeSubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -46,6 +47,7 @@ const NewPlace = () => {
         })
       );
       //Redirect User to diffrent Page
+      history.push("/");
     } catch (err) {}
 
     // sendRequest();
