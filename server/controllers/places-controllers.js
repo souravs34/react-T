@@ -57,6 +57,7 @@ const getPlacesByUserId = async (req, res, next) => {
   });
   // Because find return array and toObject can't be used to array, So we use map
 };
+
 const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -65,16 +66,20 @@ const createPlace = async (req, res, next) => {
     );
   }
 
-  const { title, description, address, creator, coordinates } = req.body;
+  const { title, description, address, creator } = req.body;
 
-  // const title = req.body.title;
+  const coordinates = {
+    lat: 117.6902408,
+    lng: 174.0115749,
+  };
+
   const createdPlace = new Place({
     title,
     description,
     address,
     location: coordinates,
     image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg", // => File Upload module, will be replaced with real image url
     creator,
   });
 
@@ -82,14 +87,19 @@ const createPlace = async (req, res, next) => {
   try {
     user = await User.findById(creator);
   } catch (err) {
-    const error = new HttpError("creating plae failed, please try again", 500);
+    const error = new HttpError(
+      "Creating place failed, please try again.",
+      500
+    );
     return next(error);
   }
+
   if (!user) {
-    const error = new HttpError("Could not find user for provided id", 404);
+    const error = new HttpError("Could not find user for provided id.", 404);
     return next(error);
   }
-  // console.log(user);
+
+  console.log(user);
 
   try {
     // await createdPlace.save();
