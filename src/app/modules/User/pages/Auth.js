@@ -13,6 +13,7 @@ import "./Auth.css";
 import ErrorModal from "../../shared/components/UI/ErrorModal";
 import LoadingSpinner from "../../shared/components/UI/LoadingSpinner";
 import { useHttpClient } from "../../../modules/shared/hooks/http-hook";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 const Auth = () => {
   const auth = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -38,7 +39,9 @@ const Auth = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
+
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
     } else {
@@ -48,6 +51,10 @@ const Auth = () => {
           name: {
             value: "",
             isValid: false,
+            image: {
+              value: null,
+              isValid: false,
+            },
           },
         },
         false
@@ -59,6 +66,7 @@ const Auth = () => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
+    console.log(formState.inputs);
     if (isLoginMode) {
       try {
         const postData = JSON.stringify({
@@ -71,15 +79,21 @@ const Auth = () => {
       } catch (err) {}
     } else {
       try {
-        const postData = JSON.stringify({
-          name: formState.inputs.name.value,
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        });
+        const formData = new FormData();
+        formData.append("email", formState.inputs.email.value);
+        formData.append("name", formState.inputs.name.value);
+        formData.append("password", formState.inputs.password.value);
+        formData.append("image", formState.inputs.image.value);
+        // const postData = JSON.stringify({
+        //   name: formState.inputs.name.value,
+        //   email: formState.inputs.email.value,
+        //   password: formState.inputs.password.value,
+        // });
+
         const responseData = await sendRequest(
           "users/signup",
           "POST",
-          postData
+          formData
         );
 
         auth.login(responseData.data.user.id);
@@ -104,6 +118,14 @@ const Auth = () => {
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please enter a name."
               onInput={inputHandler}
+            />
+          )}
+          {!isLoginMode && (
+            <ImageUpload
+              id="image"
+              center
+              onInput={inputHandler}
+              errorText="Please Upload an Image"
             />
           )}
           <Input

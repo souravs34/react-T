@@ -25,6 +25,7 @@ const UserPlaces = () => {
       prevPlaces.filter((place) => place.id !== deletedPlaceId)
     );
   };
+
   // const loadedPlaces = DUMMY_PLACES.filter((place) => place.creator === userId);
   return (
     <>
