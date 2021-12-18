@@ -20,11 +20,19 @@ const UserPlaces = () => {
     };
     fetchPlaces();
   }, [sendRequest, userId]);
-
+  const placeDeletedHandler = (deletedPlaceId) => {
+    setLoadedPlaces((prevPlaces) =>
+      prevPlaces.filter((place) => place.id !== deletedPlaceId)
+    );
+  };
   // const loadedPlaces = DUMMY_PLACES.filter((place) => place.creator === userId);
   return (
     <>
-      <ErrorModal error={error} onClear={clearError} />
+      <ErrorModal
+        error={error}
+        onClear={clearError}
+        onDeletePlaces={placeDeletedHandler}
+      />
       {isLoading && (
         <div className="center">
           <LoadingSpinner />
