@@ -24,8 +24,10 @@ const PlaceItem = (props) => {
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
     try {
-      const responseData = await sendRequest(`places/${props.id}`, "DELETE");
-      console.log(responseData);
+      await sendRequest(`places/${props.id}`, "DELETE", {
+        withCredentials: true,
+      });
+
       props.onDelete(props.id);
     } catch (err) {}
   };
@@ -79,12 +81,12 @@ const PlaceItem = (props) => {
             <Button inverse onClick={openMapHandler}>
               View On Map
             </Button>
-            {auth.isLoggedIn && (
+            {auth.userId === props.creatorId && (
               <Button to={`/places/${props.id}`} inverse>
                 Edit
               </Button>
             )}
-            {auth.isLoggedIn && (
+            {auth.userId === props.creatorId && (
               <Button danger onClick={showDeleteWarningHandler}>
                 Delete
               </Button>
