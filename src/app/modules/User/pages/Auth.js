@@ -75,7 +75,7 @@ const Auth = () => {
         });
         const responseData = await sendRequest("users/login", "POST", postData);
 
-        auth.login(responseData.data.userId);
+        auth.login(responseData.data.userId, responseData.data.token);
       } catch (err) {}
     } else {
       try {
@@ -96,7 +96,7 @@ const Auth = () => {
           formData
         );
 
-        auth.login(responseData.data.userId);
+        auth.login(responseData.data.userId, responseData.data.token);
       } catch (err) {}
     }
   };
