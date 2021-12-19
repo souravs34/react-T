@@ -10,13 +10,13 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/Util/Validators";
 import { useForm } from "../../shared/hooks/form-hook";
-import { useHttpClient } from "../../shared/hooks/http-hook";
+import { useFetchClient } from "../../shared/hooks/fetch-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const NewPlace = () => {
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useFetchClient();
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -48,7 +48,9 @@ const NewPlace = () => {
       formData.append("address", formState.inputs.address.value);
       formData.append("creator", auth.userId);
       formData.append("image", formState.inputs.image.value);
-      await sendRequest("places", "POST", formData);
+      await sendRequest("http://localhost:5000/api/places", "POST", formData, {
+        Authorization: "Bearer " + auth.token,
+      });
       //Redirect User to diffrent Page
       history.push("/");
     } catch (err) {}
