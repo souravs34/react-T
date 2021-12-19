@@ -9,7 +9,7 @@ const {
   updatePlace,
   deletePlace,
 } = require("../controllers/places-controllers");
-const checkAuth = require("../middleware/check-auth");
+//const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 
 // Get a specific place by place id(pid)
@@ -18,7 +18,7 @@ router.get("/:pid", getPlaceById);
 router.get("/user/:uid", getPlacesByUserId);
 // Create a new Place
 
-router.use(checkAuth);
+// router.use(checkAuth);
 router.post(
   "/",
   fileUpload.single("image"),
