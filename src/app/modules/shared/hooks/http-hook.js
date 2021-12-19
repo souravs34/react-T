@@ -16,6 +16,7 @@ export const useHttpClient = () => {
         const response = await AxiosUser({
           method,
           url,
+          headers,
           data: body,
           signal: httpAbortCtrl.signal,
         });
