@@ -73,7 +73,15 @@ const Auth = () => {
           email: formState.inputs.email.value,
           password: formState.inputs.password.value,
         });
-        const responseData = await sendRequest("users/login", "POST", postData);
+
+        const responseData = await sendRequest(
+          "users/login",
+          "POST",
+          postData,
+          {
+            "Content-Type": "application/json",
+          }
+        );
 
         auth.login(responseData.data.userId, responseData.data.token);
       } catch (err) {}
