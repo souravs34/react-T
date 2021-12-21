@@ -20,7 +20,6 @@ const UserPlaces = () => {
         ); // Convert Object to array
 
         responseData.data.places[0].location = propertyValues;
-        console.log(responseData.data.places);
         setLoadedPlaces(responseData.data.places);
       } catch (err) {}
     };
