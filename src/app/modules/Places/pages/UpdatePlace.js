@@ -13,6 +13,7 @@ import LoadingSpinner from "../../shared/components/UI/LoadingSpinner";
 import ErrorModal from "../../shared/components/UI/ErrorModal";
 import Card from "../../shared/components/UI/Card";
 import { AuthContext } from "../../shared/context/auth-context";
+
 const UpdatePlace = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedPlace, setLoadedPlace] = useState();
@@ -87,9 +88,10 @@ const UpdatePlace = () => {
 
   if (!loadedPlace && !error) {
     return (
-      <div className="center">
+      <div className="place-list center">
         <Card>
-          <h2>Could not find place!</h2>
+          <h2>No Places Found. Maybe Create one?</h2>
+          <Button to="/places/new">Share Place</Button>
         </Card>
       </div>
     );

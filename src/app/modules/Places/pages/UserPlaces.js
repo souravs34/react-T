@@ -4,7 +4,8 @@ import PlaceList from "../components/PlaceList";
 import ErrorModal from "../../shared/components/UI/ErrorModal";
 import LoadingSpinner from "../../shared/components/UI/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-
+import Card from "../../shared/components/UI/Card";
+import Button from "../../shared/components/FormElements/Button";
 const UserPlaces = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedPlaces, setLoadedPlaces] = useState();
@@ -35,6 +36,12 @@ const UserPlaces = () => {
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
+      <div className="place-list center">
+        <Card>
+          <h2>No Places Found. Maybe Create one?</h2>
+          <Button to="/places/new">Share Place</Button>
+        </Card>
+      </div>
       {isLoading && (
         <div className="center">
           <LoadingSpinner />

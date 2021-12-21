@@ -49,7 +49,7 @@ const getPlacesByUserId = async (req, res, next) => {
     return next(error);
   }
 
-  if (!places || places.length === 0) {
+  if (!places) {
     return next(
       new HttpError("Could not find places for the provided user id.", 404)
     );
@@ -70,15 +70,18 @@ const createPlace = async (req, res, next) => {
   }
 
   const { title, description, address, creator } = req.body;
+  let coordinates = { lat: 17.6745342, lng: 73.9832418 };
   const geoData = await geocoder
     .forwardGeocode({
       query: address,
       limit: 1,
     })
     .send();
-  console.log(geoData.body.features[0].geometry.coordinates);
+  // console.log(geoData.body.features[0].geometry.coordinates);
   const geoDataArray = geoData.body.features[0].geometry.coordinates;
-  const coordinates = { lat: geoDataArray[0], lng: geoDataArray[1] };
+  if (geoDataArray[0] !== null || geoDataArray[1] !== null) {
+    coordinates = { lat: geoDataArray[0], lng: geoDataArray[1] };
+  }
 
   // const coordinates = {
   //   lat: 117.6902408,
@@ -110,15 +113,17 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
-  console.log(user);
+  // console.log(user);
 
   try {
     // await createdPlace.save();
     const sess = await mongoose.startSession(); // Note in Udemy
     await sess.startTransaction(); // If anything goes wrong in sess then nothing is saved in DB
     await createdPlace.save({ session: sess });
+
     user.places.push(createdPlace); // Added places Id to user
     await user.save({ session: sess });
+
     await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
