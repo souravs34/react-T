@@ -34,17 +34,15 @@ const UserPlaces = () => {
   // const loadedPlaces = DUMMY_PLACES.filter((place) => place.creator === userId);
   return (
     <>
-      <ErrorModal
-        error={error}
-        onClear={clearError}
-        onDeletePlaces={placeDeletedHandler}
-      />
+      <ErrorModal error={error} onClear={clearError} />
       {isLoading && (
         <div className="center">
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
+      {!isLoading && loadedPlaces && (
+        <PlaceList items={loadedPlaces} onDeletePlaces={placeDeletedHandler} />
+      )}
     </>
   );
 };
