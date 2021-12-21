@@ -14,7 +14,13 @@ const UserPlaces = () => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(`places/user/${userId}`);
-        //console.log(responseData.data.places);
+
+        const propertyValues = Object.values(
+          responseData.data.places[0].location
+        ); // Convert Object to array
+
+        responseData.data.places[0].location = propertyValues;
+        console.log(responseData.data.places);
         setLoadedPlaces(responseData.data.places);
       } catch (err) {}
     };
