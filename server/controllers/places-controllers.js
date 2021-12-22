@@ -197,6 +197,15 @@ const deletePlace = async (req, res, next) => {
     const error = new HttpError("Could not find place for this id", 404);
     return next(error);
   }
+
+  if (place.creator.id !== req.userData.userId) {
+    const error = new HttpError(
+      "You are not allowed to delete this place.",
+      401
+    );
+    return next(error);
+  }
+
   const imagePath = place.image;
   try {
     // await place.remove();
