@@ -36,12 +36,14 @@ const UserPlaces = () => {
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
-      <div className="place-list center">
-        <Card>
-          <h2>No Places Found. Maybe Create one?</h2>
-          <Button to="/places/new">Share Place</Button>
-        </Card>
-      </div>
+      {!isLoading && !loadedPlaces && (
+        <div className="place-list center">
+          <Card>
+            <h2>No Places Found. Maybe Create one?</h2>
+            <Button to="/places/new">Share Place</Button>
+          </Card>
+        </div>
+      )}
       {isLoading && (
         <div className="center">
           <LoadingSpinner />

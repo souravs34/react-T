@@ -13,5 +13,5 @@ const placeSchema = new Schema({
   },
   creator: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
 });
-placeSchema.set("toJSON", { getters: true });
+
 module.exports = mongoose.model("Place", placeSchema);
