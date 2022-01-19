@@ -14,6 +14,7 @@ import UpdatePlace from "./modules/Places/pages/UpdatePlace";
 import Auth from "./modules/User/pages/Auth";
 import { AuthContext } from "./modules/shared/context/auth-context";
 import { useAuth } from "../app/modules/shared/hooks/auth-hook";
+
 function App() {
   const { token, login, logout, userId } = useAuth();
 
@@ -22,33 +23,19 @@ function App() {
   if (token) {
     routes = (
       <Switch>
-        <Route path="/" exact>
-          <Users />
-        </Route>
-        <Route path="/:userId/places" exact>
-          <UserPlaces />
-        </Route>
-        <Route path="/places/new" exact>
-          <NewPlace />
-        </Route>
-        <Route path="/places/:placeId">
-          <UpdatePlace />
-        </Route>
+        <Route path="/" exact component={Users} />
+        <Route path="/:userId/places" exact component={UserPlaces} />
+        <Route path="/places/new" exact component={NewPlace} />
+        <Route path="/places/:placeId" component={UpdatePlace} />
         <Redirect to="/" />
       </Switch>
     );
   } else {
     routes = (
       <Switch>
-        <Route path="/" exact>
-          <Users />
-        </Route>
-        <Route path="/:userId/places" exact>
-          <UserPlaces />
-        </Route>
-        <Route path="/auth">
-          <Auth />
-        </Route>
+        <Route path="/" exact component={Users} />
+        <Route path="/:userId/places" exact component={UserPlaces} />
+        <Route path="/auth" component={Auth} />
         <Redirect to="/auth" />
       </Switch>
     );
