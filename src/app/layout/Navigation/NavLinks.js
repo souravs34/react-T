@@ -9,7 +9,7 @@ const NavLinks = (props) => {
     <ul className="nav-links">
       <li>
         <NavLink to="/" exact>
-          ALL USERS
+          USERS
         </NavLink>
       </li>
       {auth.isLoggedIn && (
@@ -24,7 +24,7 @@ const NavLinks = (props) => {
       )}
       {!auth.isLoggedIn && (
         <li>
-          <NavLink to="/auth/login">Authenticate</NavLink>
+          <NavLink to="/auth/login">Login</NavLink>
         </li>
       )}
       {auth.isLoggedIn && (
