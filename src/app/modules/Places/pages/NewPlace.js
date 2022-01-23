@@ -62,6 +62,11 @@ const NewPlace = () => {
       <ErrorModal error={error} onClear={clearError} />
       <form className="place-form" onSubmit={placeSubmitHandler}>
         {isLoading && <LoadingSpinner Overlay />}
+        <ImageUpload
+          id="image"
+          onInput={inputHandler}
+          errorText="Please Upload an Image"
+        />
         <Input
           id="title"
           element="input"
@@ -87,11 +92,7 @@ const NewPlace = () => {
           errorText="Please enter a valid Address."
           onInput={inputHandler}
         />
-        <ImageUpload
-          id="image"
-          onInput={inputHandler}
-          errorText="Please Upload an Image"
-        />
+
         <Button type="submit" disabled={!formState.isValid}>
           ADD PLACE
         </Button>
