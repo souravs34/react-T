@@ -3,8 +3,9 @@
 }
 .user-item {
   margin: 3rem;
-  width: calc(25% - 2rem);
+  /* width: calc(25% - 2rem); */
   min-width: 17.5rem;
+  width: 25rem;
   list-style: none;
 }
 
