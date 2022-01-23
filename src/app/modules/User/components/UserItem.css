@@ -1,3 +1,6 @@
+.user-item__content {
+  background: red;
+}
 .user-item {
   margin: 3rem;
   width: calc(25% - 2rem);

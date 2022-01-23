@@ -62,11 +62,15 @@ const NewPlace = () => {
       <ErrorModal error={error} onClear={clearError} />
       <form className="place-form" onSubmit={placeSubmitHandler}>
         {isLoading && <LoadingSpinner Overlay />}
-        <ImageUpload
-          id="image"
-          onInput={inputHandler}
-          errorText="Please Upload an Image"
-        />
+        <div
+          style={{ display: "flex", flexDirection: "row", marginLeft: "33%" }}
+        >
+          <ImageUpload
+            id="image"
+            onInput={inputHandler}
+            errorText="Please Upload an Image"
+          />
+        </div>
         <Input
           id="title"
           element="input"
