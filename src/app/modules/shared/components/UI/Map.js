@@ -8,8 +8,7 @@ const Map = (props) => {
   const { center, zoom } = props;
   const mapRef = useRef();
   useEffect(() => {
-    mapboxgl.accessToken =
-      "pk.eyJ1Ijoic291cmF2YiIsImEiOiJja3d5b2t2ZzgwcGgyMm5tbjAxc3pkeHByIn0.SgF9RjWoozF0NA3RVFibsQ";
+    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
     const map = new mapboxgl.Map({
       container: mapRef.current,
       style: "mapbox://styles/mapbox/streets-v11",

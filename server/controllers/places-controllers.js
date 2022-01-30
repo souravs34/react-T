@@ -5,8 +5,7 @@ const Place = require("../models/place");
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-const mapboxToken =
-  "pk.eyJ1Ijoic291cmF2YiIsImEiOiJja3d5b2t2ZzgwcGgyMm5tbjAxc3pkeHByIn0.SgF9RjWoozF0NA3RVFibsQ";
+const mapboxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapboxToken });
 const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid; //{pid:'p1}

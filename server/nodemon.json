@@ -1,0 +1,9 @@
+{
+  "env": {
+    "DB_USER": "Sourav",
+    "DB_PASSWORD": "souravx234",
+    "DB_NAME": "places",
+    "MAPBOX_TOKEN": "pk.eyJ1Ijoic291cmF2YiIsImEiOiJja3d5b2t2ZzgwcGgyMm5tbjAxc3pkeHByIn0.SgF9RjWoozF0NA3RVFibsQ",
+    "JWT_KEY": "supersecret_dont_share"
+  }
+}
