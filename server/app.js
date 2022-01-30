@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 });
 const placesRoutes = require("./routes/places-routes");
 const userRoutes = require("./routes/users-routes");
-app.use("/api/places", placesRoutes); // => /api/places/...
+app.use("/api/places", placesRoutes); // => /api/places/....
 app.use("/api/users", userRoutes);
 
 app.use((req, res, next) => {
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  //Multer File Deletion if error found
+  //Multer File Deletion if error foun
   if (req.file) {
     fs.unlink(req.file.path, (err) => {
       console.log(err);
@@ -48,7 +48,7 @@ mongoose
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.zb6es.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
   )
   .then(() => {
-    app.listen(5000);
+    app.listen(process.env.PORT || 5000);
     console.log("Connected");
   })
   .catch((err) => {
