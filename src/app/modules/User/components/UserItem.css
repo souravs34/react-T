@@ -24,7 +24,7 @@
 }
 
 .user-item__content {
-  padding: 0;
+  padding: 0 !important;
   height: 20rem;
 }
 
